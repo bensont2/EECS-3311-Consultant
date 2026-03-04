@@ -8,7 +8,7 @@ class BookingState:
     def reject(self, booking):
         raise Exception(f"Cannot reject a booking from state: {booking.status}")
     def cancel(self, booking):
-        raise Exception(f"Cannot cancel a booking from state: {booking.status}")
+        raise Exception(f"Cannot cancel a booking from state: {booking.status}") 
     def process_payment(self, booking):
         raise Exception(f"Cannot process payment for a booking in state: {booking.status}")
     def complete(self, booking):
