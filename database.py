@@ -2,6 +2,8 @@ from models import db, User, Client, Consultant, Admin, Service, Availability, S
 from werkzeug.security import generate_password_hash
 from datetime import date, time, timedelta
 
+# Database Schema 
+
 def seed_db():
     db.create_all()
     
