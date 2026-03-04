@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Book Session</h2>
+<p>Service: {{ service.name }} - ${{ service.base_price }}</p>
+<p>Time: {{ avail.date }} {{ avail.start_time }} to {{ avail.end_time }}</p>
+<form method="POST">
+    <input type="text" name="notes" placeholder="Notes for consultant">
+    <button type="submit">Confirm Request</button>
+</form>
+{% endblock %}
