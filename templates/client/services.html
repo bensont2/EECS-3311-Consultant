@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Browse Services</h2>
+<ul>
+{% for s in services %}
+    <li><strong>{{ s.name }}</strong> (${{ s.base_price }})
+    <ul>
+    {% for a in availabilities %}
+        {% if a.consultant_id == s.consultant_id %}
+            <li>{{ a.date }} at {{ a.start_time }} 
+                <a href="/client/book/{{ a.id }}"><button>Book</button></a>
+            </li>
+        {% endif %}
+    {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Platform</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background: #f4f4f4; color: #333; }
+        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
+        .nav a { margin-right: 15px; text-decoration: none; color: #0066cc; }
+        .flash { padding: 10px; background: #e2f3e5; color: #2d6a36; margin-bottom: 15px; border-radius: 4px; }
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 0.8em; color: white; }
+        .Requested { background: #f39c12; }
+        .Pending.Payment { background: #3498db; }
+        .Paid { background: #2ecc71; }
+        .Completed { background: #9b59b6; }
+        .Rejected { background: #e74c3c; }
+        .Cancelled { background: #7f8c8d; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        button { padding: 6px 12px; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 4px; }
+        form { margin-top: 10px; }
+        input, select { padding: 8px; margin: 5px 0; width: 100%; max-width: 300px; display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav">
+            {% if session.get('role') == 'client' %}
+                <a href="/client/dashboard">Dashboard</a>
+                <a href="/client/services">Services</a>
+                <a href="/client/bookings">My Bookings</a>
+                <a href="/client/payment-methods">Payment Methods</a>
+                <a href="/client/payment-history">History</a>
+            {% elif session.get('role') == 'consultant' %}
+                <a href="/consultant/dashboard">Dashboard</a>
+                <a href="/consultant/availability">Availability</a>
+                <a href="/consultant/requests">Requests</a>
+            {% elif session.get('role') == 'admin' %}
+                <a href="/admin/dashboard">Dashboard</a>
+                <a href="/admin/consultants">Consultants</a>
+                <a href="/admin/policies">Policies</a>
+            {% endif %}
+            {% if session.get('user_id') %}
+                <a href="/auth/logout">Logout</a>
+            {% else %}
+                <a href="/auth/login">Login</a>
+                <a href="/auth/register">Register</a>
+            {% endif %}
+        </div>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

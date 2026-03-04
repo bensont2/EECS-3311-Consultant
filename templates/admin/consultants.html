@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Consultant Approvals</h2>
+<table>
+    <tr><th>Name</th><th>Status</th><th>Actions</th></tr>
+    {% for c in consultants %}
+    <tr>
+        <td>{{ c.name }}</td>
+        <td>{{ c.approval_status }}</td>
+        <td>
+            <form method="POST" action="/admin/approve/{{ c.id }}" style="display:inline;"><button>Approve</button></form>
+            <form method="POST" action="/admin/reject/{{ c.id }}" style="display:inline;"><button>Reject</button></form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
