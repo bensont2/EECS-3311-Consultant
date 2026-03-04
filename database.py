@@ -10,6 +10,7 @@ def seed_db():
     if Admin.query.first():
         return
         
+    # Admin account
     admin = Admin(
         name="System Admin", 
         email="admin@platform.com", 
@@ -21,6 +22,7 @@ def seed_db():
     policy = SystemPolicy(policy_name="cancellation_hours", policy_value="24", updated_by=1)
     db.session.add(policy)
 
+    # Test consultants
     c1 = Consultant(
         name="Alice Finance", email="alice@test.com", 
         password_hash=generate_password_hash("password123"), role="consultant",
@@ -34,10 +36,12 @@ def seed_db():
     db.session.add_all([c1, c2])
     db.session.commit()
 
+    # Test clients
     client1 = Client(name="John Doe", email="client1@test.com", password_hash=generate_password_hash("password123"), role="client")
     client2 = Client(name="Jane Smith", email="client2@test.com", password_hash=generate_password_hash("password123"), role="client")
     db.session.add_all([client1, client2])
     
+    # Services offered by each consultant
     s1 = Service(name="Portfolio Review", description="Full review.", duration_minutes=60, base_price=150.0, consultant_id=c1.id)
     s2 = Service(name="Tax Strategy", description="Tax audit.", duration_minutes=30, base_price=50.0, consultant_id=c2.id)
     db.session.add_all([s1, s2])
