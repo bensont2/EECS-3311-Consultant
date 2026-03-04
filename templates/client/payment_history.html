@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Payment History</h2>
+<ul>
+{% for p in payments %}
+    <li>TXN: {{ p.transaction_id }} | Amount: ${{ p.amount }} | Status: {{ p.status }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
