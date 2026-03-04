@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Process Payment</h2>
+<p>Amount Due: ${{ booking.service.base_price }}</p>
+<form method="POST">
+    <input type="text" name="card_number" placeholder="16-digit Card Number" required>
+    <input type="text" name="expiry" placeholder="MM/YY" required>
+    <input type="text" name="cvv" placeholder="CVV" required>
+    <button type="submit">Submit Payment</button>
+</form>
+{% endblock %}
