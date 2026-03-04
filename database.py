@@ -46,6 +46,6 @@ def seed_db():
         Availability(consultant_id=c1.id, date=today + timedelta(days=2), start_time=time(10,0), end_time=time(11,0)),
         Availability(consultant_id=c1.id, date=today + timedelta(days=3), start_time=time(14,0), end_time=time(15,0)),
         Availability(consultant_id=c2.id, date=today + timedelta(days=1), start_time=time(9,0), end_time=time(9,30))
-    ]
+    ] 
     db.session.add_all(slots)
     db.session.commit()
