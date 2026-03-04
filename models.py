@@ -3,6 +3,7 @@ from datetime import datetime
 
 db = SQLAlchemy()
 
+# Base user model
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +19,7 @@ class User(db.Model):
         'polymorphic_on': type
     }
 
+# Represents a client who books consultations.
 class Client(User):
     __mapper_args__ = {'polymorphic_identity': 'client'}
 
@@ -28,6 +30,7 @@ class Consultant(User):
     hourly_rate = db.Column(db.Float)
     approval_status = db.Column(db.String(20), default='pending')
 
+# Represents a platform administrator.
 class Admin(User):
     __mapper_args__ = {'polymorphic_identity': 'admin'}
     admin_level = db.Column(db.Integer, default=1)
@@ -40,6 +43,7 @@ class Service(db.Model):
     base_price = db.Column(db.Float, nullable=False)
     consultant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
+# A time slot a consultant marks as available for bookings.
 class Availability(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     consultant_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -48,6 +52,7 @@ class Availability(db.Model):
     end_time = db.Column(db.Time, nullable=False)
     is_booked = db.Column(db.Boolean, default=False)
 
+# Status tracks the lifecycle: Requested -> Confirmed -> Completed / Cancelled.
 class Booking(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -63,6 +68,7 @@ class Booking(db.Model):
     service = db.relationship('Service')
     availability = db.relationship('Availability')
 
+# Records a payment transaction linked to a booking.
 class Payment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     booking_id = db.Column(db.Integer, db.ForeignKey('booking.id'), nullable=False)
@@ -81,6 +87,7 @@ class PaymentMethod(db.Model):
     encrypted_details = db.Column(db.Text, nullable=False)
     is_default = db.Column(db.Boolean, default=False)
 
+# Admins update these at runtime without requiring a code deploy.
 class SystemPolicy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     policy_name = db.Column(db.String(100), unique=True, nullable=False)
@@ -88,6 +95,7 @@ class SystemPolicy(db.Model):
     updated_by = db.Column(db.Integer, db.ForeignKey('user.id'))
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+# In-app notifications sent to any user type.
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
