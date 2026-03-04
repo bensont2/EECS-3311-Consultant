@@ -1,4 +1,4 @@
-# [DESIGN PATTERN: State]
+# DESIGN PATTERN: State
 # Booking has complex state-dependent behaviour. The State Pattern eliminates large 
 # if/elif chains in the booking logic and makes each state's rules self-contained.
 

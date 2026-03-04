@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 
-# [DESIGN PATTERN: Strategy]
+# DESIGN PATTERN: Strategy
 # Different payment methods require different validation logic. The Strategy pattern lets 
 # you swap payment algorithms at runtime without changing the core client code.
 
