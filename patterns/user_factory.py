@@ -1,6 +1,6 @@
 from models import Client, Consultant, Admin
 
-# [DESIGN PATTERN: Simple Factory]
+# DESIGN PATTERN: Simple Factory
 # Centralises object creation logic. It decouples the application from needing to know 
 # exactly which subclass of User to instantiate based on user input.
 
