@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>System Policies</h2>
+<form method="POST">
+    <input type="text" name="name" placeholder="Policy Name" required>
+    <input type="text" name="value" placeholder="Policy Value" required>
+    <button type="submit">Save Policy</button>
+</form>
+<ul>
+{% for p in policies %}
+    <li>{{ p.policy_name }}: {{ p.policy_value }}</li>
+{% endfor %}
+</ul>
+{% endblock %}
