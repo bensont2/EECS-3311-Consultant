@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Booking Requests</h2>
+<table>
+    <tr><th>ID</th><th>Client</th><th>Status</th><th>Actions</th></tr>
+    {% for b in bookings %}
+    <tr>
+        <td>{{ b.id }}</td>
+        <td>{{ b.client.name }}</td>
+        <td><span class="badge {{ b.status }}">{{ b.status }}</span></td>
+        <td>
+            {% if b.status == 'Requested' %}
+            <form method="POST" action="/consultant/accept/{{ b.id }}" style="display:inline;"><button>Accept</button></form>
+            <form method="POST" action="/consultant/reject/{{ b.id }}" style="display:inline;"><button>Reject</button></form>
+            {% elif b.status == 'Paid' %}
+            <form method="POST" action="/consultant/complete/{{ b.id }}" style="display:inline;"><button>Complete</button></form>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

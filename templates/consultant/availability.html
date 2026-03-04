@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Manage Availability</h2>
+<form method="POST">
+    <input type="date" name="date" required>
+    <input type="time" name="start_time" required>
+    <input type="time" name="end_time" required>
+    <button type="submit">Add Slot</button>
+</form>
+<ul>
+{% for s in slots %}
+    <li>{{ s.date }} | {{ s.start_time }} - {{ s.end_time }} {% if s.is_booked %}(Booked){% endif %}</li>
+{% endfor %}
+</ul>
+{% endblock %}
