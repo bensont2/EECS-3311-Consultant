@@ -72,12 +72,21 @@ def payment(booking_id):
     booking = Booking.query.get_or_404(booking_id)
     if request.method == 'POST':
         try:
+            method = request.form.get('payment_method', 'credit_card')
+
             details = {
+                # credit/debit
                 'card_number': request.form.get('card_number'),
-                'expiry': request.form.get('expiry'),
-                'cvv': request.form.get('cvv')
+                'expiry':      request.form.get('expiry'),
+                'cvv':         request.form.get('cvv'),
+                # paypal
+                'email':          request.form.get('email'),
+                # bank transfer
+                'account_number': request.form.get('account_number'),
+                'routing_number': request.form.get('routing_number'),
             }
-            txn_id = execute_transaction(booking.id, session['user_id'], booking.service.base_price, 'credit_card', details)
+
+            txn_id = execute_transaction(booking.id, session['user_id'], booking.service.base_price, method, details)
             transition_booking(booking, 'pay')
             create_notification(booking.consultant_id, f"Payment received for booking {booking.id}")
             flash(f'Payment successful! TXN: {txn_id}')
