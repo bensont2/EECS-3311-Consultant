@@ -2,10 +2,74 @@
 {% block content %}
 <h2>Process Payment</h2>
 <p>Amount Due: ${{ booking.service.base_price }}</p>
+
 <form method="POST">
-    <input type="text" name="card_number" placeholder="16-digit Card Number" required>
-    <input type="text" name="expiry" placeholder="MM/YY" required>
-    <input type="text" name="cvv" placeholder="CVV" required>
+    <!-- Payment Method Selector -->
+    <div>
+        <label for="payment_method">Payment Method</label>
+        <select name="payment_method" id="payment_method" onchange="showFields(this.value)" required>
+            <option value="">-- Select a method --</option>
+            <option value="credit_card">Credit Card</option>
+            <option value="debit_card">Debit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="bank_transfer">Bank Transfer</option>
+        </select>
+    </div>
+
+    <!-- Credit / Debit Card Fields -->
+    <div id="fields_credit_card" class="payment-fields" style="display:none;">
+        <label>Card Number</label>
+        <input type="text" name="card_number" placeholder="16-digit Card Number" maxlength="16">
+        <label>Expiry</label>
+        <input type="text" name="expiry" placeholder="MM/YY" maxlength="5">
+        <label>CVV</label>
+        <input type="text" name="cvv" placeholder="CVV" maxlength="4">
+    </div>
+
+    <!-- Debit card reuses same fields, just aliased via JS -->
+    <div id="fields_debit_card" class="payment-fields" style="display:none;">
+        <label>Card Number</label>
+        <input type="text" name="card_number_debit" placeholder="16-digit Card Number" maxlength="16">
+        <label>Expiry</label>
+        <input type="text" name="expiry_debit" placeholder="MM/YY" maxlength="5">
+        <label>CVV</label>
+        <input type="text" name="cvv_debit" placeholder="CVV" maxlength="4">
+    </div>
+
+    <!-- PayPal Fields -->
+    <div id="fields_paypal" class="payment-fields" style="display:none;">
+        <label>PayPal Email</label>
+        <input type="email" name="email" placeholder="your@email.com">
+    </div>
+
+    <!-- Bank Transfer Fields -->
+    <div id="fields_bank_transfer" class="payment-fields" style="display:none;">
+        <label>Account Number</label>
+        <input type="text" name="account_number" placeholder="Account Number">
+        <label>Routing Number</label>
+        <input type="text" name="routing_number" placeholder="Routing Number">
+    </div>
+
     <button type="submit">Submit Payment</button>
 </form>
+
+<script>
+    function showFields(method) {
+        // Hide all payment field sections
+        document.querySelectorAll('.payment-fields').forEach(el => {
+            el.style.display = 'none';
+            // Remove required from all inputs inside hidden sections
+            el.querySelectorAll('input').forEach(input => input.removeAttribute('required'));
+        });
+
+        // Show the selected section and mark its fields required
+        if (method) {
+            const active = document.getElementById('fields_' + method);
+            if (active) {
+                active.style.display = 'block';
+                active.querySelectorAll('input').forEach(input => input.setAttribute('required', true));
+            }
+        }
+    }
+</script>
 {% endblock %}
