@@ -21,7 +21,7 @@ def execute_transaction(booking_id, client_id, amount, method_type, details):
     context = PaymentContext(strategy)
     context.execute_payment(amount, details)
     
-    # Simulate payment processing delay
+    
     time.sleep(2)
     
     txn_id = f"TXN-{uuid.uuid4().hex[:12].upper()}"
