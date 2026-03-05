@@ -4,6 +4,7 @@ from services.booking_service import transition_booking
 from services.payment_service import execute_transaction
 from services.notification_service import create_notification
 import json
+from models import Notification
 
 client_bp = Blueprint('client', __name__, url_prefix='/client')
 
@@ -15,11 +16,16 @@ def client_required(f):
     wrap.__name__ = f.__name__
     return wrap
 
+
 @client_bp.route('/dashboard')
 @client_required
 def dashboard():
-    bookings = Booking.query.filter_by(client_id=session['user_id']).all()
-    return render_template('client/dashboard.html', bookings=bookings)
+    notifications = Notification.query.filter_by(
+        user_id=session['user_id'],
+        is_read=False
+    ).order_by(Notification.created_at.desc()).all()
+    return render_template('client/dashboard.html', notifications=notifications)
+
 
 @client_bp.route('/services')
 @client_required
