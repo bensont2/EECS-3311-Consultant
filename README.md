@@ -58,7 +58,7 @@ Visit **http://localhost:5000** — the database is created and seeded automatic
 
 | Person | Role | Files |
 |---|---|---|
-| **[Faiyaz Saraf]** | Backend Core | `models.py`, `database.py`, `config.py` |
-| **[Abror Khabibov]** | Routes / API | `app.py`, `routes/` |
-| **[Benson Tran]** | Business Logic | `services/`, `patterns/` |
-| **[Misha Varankesh]** | Frontend | `templates/` |
+| **Faiyaz Saraf** | Backend Core | `models.py`, `database.py`, `config.py` |
+| **Abror Khabibov** | Routes / API | `app.py`, `routes/` |
+| **Benson Tran** | Business Logic | `services/`, `patterns/` |
+| **Misha Varankesh** | Frontend | `templates/` |
