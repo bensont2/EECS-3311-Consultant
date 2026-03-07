@@ -1,4 +1,5 @@
 # EECS-3311 Consultant Booking Platform
+Our Class and use case diagrams are in the pdf diagrams folder
 
 A Flask + SQLite web app where clients book consultants, consultants manage schedules, and admins oversee the platform.
 
