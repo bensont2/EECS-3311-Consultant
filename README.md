@@ -38,6 +38,8 @@ Flask **Blueprints** separate the three user roles (`/auth`, `/client`, `/consul
 git clone https://github.com/bensont2/EECS-3311-Consultant.git
 cd EECS-3311-Consultant
 pip install flask flask-sqlalchemy werkzeug
+pip install groq
+pip install python-dotenv
 python Backend/app.py
 ```
 

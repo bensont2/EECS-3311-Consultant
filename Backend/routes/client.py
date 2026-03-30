@@ -5,8 +5,13 @@ from services.payment_service import execute_transaction
 from services.notification_service import create_notification
 import json
 from models import Notification
+import os
+from groq import Groq
+from dotenv import load_dotenv
 
 client_bp = Blueprint('client', __name__, url_prefix='/client')
+load_dotenv()
+client = Groq(api_key=os.getenv("AI_key"))
 
 def client_required(f):
     def wrap(*args, **kwargs):
@@ -15,6 +20,35 @@ def client_required(f):
         return f(*args, **kwargs)
     wrap.__name__ = f.__name__
     return wrap
+
+@client_bp.route('/ai-assistant-bot')
+@client_required
+def ai_assistant_bot():
+    return render_template('client/ai_assistant_bot.html')
+
+@client_bp.route('/api/chat', methods=['POST'])
+@client_required
+def chat_api():
+    data = request.get_json()
+    user_message = data.get('message')
+
+    try:
+        completion = client.chat.completions.create(
+            model="llama-3.1-8b-instant",  
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant for a consulting booking platform. Here is your context and scope: "},
+                {"role": "user", "content": user_message}
+            ]
+        )
+
+        reply = completion.choices[0].message.content
+
+    except Exception as e:
+        print(e)
+        reply = "Sorry, something went wrong."
+
+    return {"reply": reply}
+
 
 
 @client_bp.route('/dashboard')
