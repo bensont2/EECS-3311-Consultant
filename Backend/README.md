@@ -38,7 +38,7 @@ Flask **Blueprints** separate the three user roles (`/auth`, `/client`, `/consul
 git clone https://github.com/bensont2/EECS-3311-Consultant.git
 cd EECS-3311-Consultant
 pip install flask flask-sqlalchemy werkzeug
-python Backend/app.py
+python app.py
 ```
 
 Visit **http://localhost:5000** — the database is created and seeded automatically.

@@ -8,7 +8,7 @@ from routes.consultant import consultant_bp
 from routes.admin import admin_bp
 
 def create_app():
-    app = Flask(__name__, template_folder='templates')
+    app = Flask(__name__, template_folder='../Frontend/templates')
     app.config.from_object(Config)
     db.init_app(app)
 
