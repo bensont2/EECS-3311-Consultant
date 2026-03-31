@@ -18,8 +18,9 @@ def seed_db():
         role="admin"
     )
     db.session.add(admin)
+    db.session.flush() 
 
-    policy = SystemPolicy(policy_name="cancellation_hours", policy_value="24", updated_by=1)
+    policy = SystemPolicy(policy_name="cancellation_hours", policy_value="24", updated_by=admin.id)
     db.session.add(policy)
 
     # Test consultants

@@ -1,3 +1,4 @@
+import os
 from flask import Flask, redirect, url_for
 from config import Config
 from models import db
@@ -8,7 +9,8 @@ from routes.consultant import consultant_bp
 from routes.admin import admin_bp
 
 def create_app():
-    app = Flask(__name__, template_folder='../Frontend/templates')
+    template_dir = os.environ.get('TEMPLATE_DIR', '../Frontend/templates')
+    app = Flask(__name__, template_folder=template_dir)
     app.config.from_object(Config)
     db.init_app(app)
 
