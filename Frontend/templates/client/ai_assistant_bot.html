@@ -2,114 +2,15 @@
 
 {% block content %}
 <h2>AI Assistant</h2>
-<p>Ask questions or get help with bookings.</p>
-
-<div class="chat-container" id="chat"></div>
-
-<div class="input-container">
-    <input type="text" id="messageInput" placeholder="Type a message..." />
-    <button onclick="sendMessage()">Send</button>
-</div>
-
-<style>
-.chat-container {
-    margin-top: 20px;
-    max-height: 400px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #f9f9f9;
-}
-
-.message {
-    max-width: 70%;
-    padding: 10px;
-    border-radius: 8px;
-}
-
-.user {
-    align-self: flex-end;
-    background: #dbeafe; /* light blue */
-}
-
-.bot {
-    align-self: flex-start;
-    background: #e5e7eb; /* light gray */
-}
-
-.input-container {
-    display: flex;
-    margin-top: 10px;
-}
-
-input {
-    flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-button {
-    margin-left: 10px;
-    padding: 10px 15px;
-    border: none;
-    background: #2563eb;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #1d4ed8;
-}
-</style>
+<p>The AI Assistant is now available as a chat widget in the bottom-right corner of every page. Click the green button to start chatting!</p>
 
 <script>
-function addMessage(text, sender) {
-    const chat = document.getElementById('chat');
-
-    const msg = document.createElement('div');
-    msg.classList.add('message', sender);
-    msg.innerText = text;
-
-    chat.appendChild(msg);
-    chat.scrollTop = chat.scrollHeight;
-}
-
-function sendMessage() {
-    const input = document.getElementById('messageInput');
-    const text = input.value.trim();
-
-    if (text === "") return;
-
-    addMessage(text, 'user');
-    input.value = "";
-
-    fetch('/client/api/chat', {  
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: text })
-    })
-    .then(response => response.json())
-    .then(data => {
-        addMessage(data.reply, 'bot');
-    })
-    .catch(err => {
-        addMessage("Error contacting server", 'bot');
-        console.error(err);
-    });
-}
-
-document.getElementById("messageInput")
-    .addEventListener("keypress", function(e) {
-        if (e.key === "Enter") sendMessage();
+    // Auto-open the chat widget when visiting this page
+    document.addEventListener('DOMContentLoaded', function() {
+        const win = document.getElementById('ai-chat-window');
+        if (win && !win.classList.contains('open')) {
+            toggleChat();
+        }
     });
 </script>
-
 {% endblock %}
