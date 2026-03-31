@@ -3,23 +3,253 @@
 <head>
     <title>Booking Platform</title>
     <style>
-        body { font-family: sans-serif; margin: 40px; background: #f4f4f4; color: #333; }
-        .container { background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-        .nav { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
-        .nav a { margin-right: 15px; text-decoration: none; color: #0066cc; }
-        .flash { padding: 10px; background: #e2f3e5; color: #2d6a36; margin-bottom: 15px; border-radius: 4px; }
-        .badge { padding: 4px 8px; border-radius: 12px; font-size: 0.8em; color: white; }
-        .Requested { background: #f39c12; }
-        .Pending.Payment { background: #3498db; }
-        .Paid { background: #2ecc71; }
-        .Completed { background: #9b59b6; }
-        .Rejected { background: #e74c3c; }
-        .Cancelled { background: #7f8c8d; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
-        button { padding: 6px 12px; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 4px; }
-        form { margin-top: 10px; }
-        input, select { padding: 8px; margin: 5px 0; width: 100%; max-width: 300px; display: block; }
+        /* === BLACK & EMERALD THEME === */
+        * { box-sizing: border-box; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #000000;
+            color: #E5E7EB;
+            min-height: 100vh;
+        }
+        
+        .container { 
+            background: #121212;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #34D399;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 20px rgba(16,185,129,0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Navigation */
+        .nav { 
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #34D399;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .nav a { 
+            padding: 8px 16px;
+            text-decoration: none;
+            color: #10B981;
+            border-radius: 6px;
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+        .nav a:hover { 
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+        }
+        
+        /* Flash Messages */
+        .flash { 
+            padding: 12px 16px;
+            background: rgba(16, 185, 129, 0.15);
+            color: #34D399;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #10B981;
+        }
+        
+        /* Status Badges */
+        .badge { 
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .Requested { background: #f39c12; color: #000; }
+        .Pending-Payment, .Pending { background: #3498db; color: #fff; }
+        .Confirmed { background: #10B981; color: #000; }
+        .Paid { background: #34D399; color: #000; }
+        .Completed { background: #9b59b6; color: #fff; }
+        .Rejected { background: #e74c3c; color: #fff; }
+        .Cancelled { background: #6B7280; color: #fff; }
+        
+        /* Tables */
+        table { 
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #000000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th { 
+            padding: 14px 16px;
+            text-align: left;
+            background: #121212;
+            color: #10B981;
+            font-weight: 600;
+            border-bottom: 2px solid #34D399;
+        }
+        td { 
+            padding: 12px 16px;
+            border-bottom: 1px solid #1f1f1f;
+            color: #E5E7EB;
+        }
+        tr:hover td {
+            background: rgba(16, 185, 129, 0.05);
+        }
+        
+        /* Buttons */
+        button { 
+            padding: 8px 16px;
+            cursor: pointer;
+            background: #10B981;
+            color: #000000;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        button:hover { 
+            background: #059669;
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        
+        /* Secondary/Danger buttons */
+        button.secondary {
+            background: #1f1f1f;
+            color: #E5E7EB;
+            border: 1px solid #34D399;
+        }
+        button.secondary:hover {
+            background: #2a2a2a;
+        }
+        button.danger {
+            background: #e74c3c;
+            color: #fff;
+        }
+        button.danger:hover {
+            background: #c0392b;
+        }
+        
+        /* Forms */
+        form { margin-top: 15px; }
+        
+        label {
+            display: block;
+            color: #10B981;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 14px;
+        }
+        
+        input, select, textarea { 
+            padding: 12px 14px;
+            margin: 5px 0 15px 0;
+            width: 100%;
+            max-width: 350px;
+            display: block;
+            background: #000000;
+            border: 1px solid #34D399;
+            border-radius: 8px;
+            color: #E5E7EB;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        input::placeholder, textarea::placeholder {
+            color: #6B7280;
+        }
+        
+        select {
+            cursor: pointer;
+        }
+        select option {
+            background: #121212;
+            color: #E5E7EB;
+        }
+        
+        /* Links */
+        a {
+            color: #10B981;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #34D399;
+        }
+        
+        /* Headings */
+        h1, h2, h3, h4 {
+            color: #FFFFFF;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #10B981;
+            display: inline-block;
+        }
+        
+        /* Lists */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+        }
+        ul li {
+            padding: 12px 16px;
+            background: #000000;
+            border: 1px solid #1f1f1f;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        ul li:hover {
+            border-color: #34D399;
+            background: rgba(16, 185, 129, 0.05);
+        }
+        
+        /* Notifications section */
+        .notifications {
+            background: #000000;
+            border: 1px solid #34D399;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+        .notifications h3 {
+            color: #10B981;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        .notifications ul li {
+            border-color: #121212;
+        }
+        .notifications small {
+            color: #6B7280;
+            font-size: 0.85em;
+        }
+        
+        /* Payment fields visibility */
+        .payment-fields { margin-top: 15px; }
+        
+        /* Utility classes */
+        .text-muted { color: #6B7280; }
+        .text-success { color: #10B981; }
+        .text-danger { color: #e74c3c; }
+        .mt-2 { margin-top: 10px; }
+        .mb-2 { margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -192,6 +422,7 @@
             outline: none;
             width: auto;
             max-width: none;
+            margin: 0;
         }
         #ai-chat-input::placeholder {
             color: #6B7280;
