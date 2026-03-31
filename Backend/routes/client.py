@@ -36,7 +36,7 @@ def chat_api():
         completion = client.chat.completions.create(
             model="llama-3.1-8b-instant",  
             messages=[
-                {"role": "system", "content": """You are an intelligent assistant for the EECS-3311 Consulting Booking Platform. You help clients navigate and understand the consulting booking process.
+                {"role": "system", "content": """You are an intelligent assistant for the Financial Consultancy Booking Platform. You help clients navigate and understand the consulting booking process.
 
 ABOUT THE PLATFORM:
 - Clients can browse available consulting services from professional consultants
