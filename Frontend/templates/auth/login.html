@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Login</h2>
-<form method="POST">
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button type="submit">Login</button>
-</form>
+<div class="auth-wrapper">
+    <h2>Welcome Back</h2>
+    <p class="auth-subtitle">Sign in to your booking platform account</p>
+    <form method="POST">
+        <input type="email" name="email" placeholder="Email address" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Sign In</button>
+    </form>
+    <p class="auth-link">Don't have an account? <a href="/auth/register">Register here</a></p>
+</div>
 {% endblock %}

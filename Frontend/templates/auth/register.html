@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-<h2>Register</h2>
-<form method="POST">
-    <select name="role">
-        <option value="client">Client</option>
-        <option value="consultant">Consultant</option>
-    </select>
-    <input type="text" name="name" placeholder="Full Name" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input type="text" name="specialty" placeholder="Specialty (Consultants only)">
-    <button type="submit">Register</button>
-</form>
+<div class="auth-wrapper">
+    <h2>Create Account</h2>
+    <p class="auth-subtitle">Join the booking platform to get started</p>
+    <form method="POST">
+        <select name="role">
+            <option value="client">Client</option>
+            <option value="consultant">Consultant</option>
+        </select>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email address" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="text" name="specialty" placeholder="Specialty (Consultants only)">
+        <button type="submit">Create Account</button>
+    </form>
+    <p class="auth-link">Already have an account? <a href="/auth/login">Sign in</a></p>
+</div>
 {% endblock %}

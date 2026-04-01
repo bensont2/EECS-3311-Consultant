@@ -105,7 +105,15 @@ def dashboard():
         user_id=session['user_id'],
         is_read=False
     ).order_by(Notification.created_at.desc()).all()
-    return render_template('client/dashboard.html', notifications=notifications)
+    booking_count = Booking.query.filter_by(client_id=session['user_id']).count()
+    service_count = Service.query.count()
+    payment_count = Payment.query.filter_by(client_id=session['user_id']).count()
+    return render_template('client/dashboard.html',
+        notifications=notifications,
+        booking_count=booking_count,
+        service_count=service_count,
+        payment_count=payment_count
+    )
 
 
 @client_bp.route('/services')

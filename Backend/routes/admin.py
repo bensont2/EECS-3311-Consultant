@@ -14,7 +14,14 @@ def admin_required(f):
 @admin_bp.route('/dashboard')
 @admin_required
 def dashboard():
-    return render_template('admin/dashboard.html')
+    consultant_count = Consultant.query.count()
+    policy_count = SystemPolicy.query.count()
+    pending_count = Consultant.query.filter_by(approval_status='pending').count()
+    return render_template('admin/dashboard.html',
+        consultant_count=consultant_count,
+        policy_count=policy_count,
+        pending_count=pending_count
+    )
 
 @admin_bp.route('/consultants')
 @admin_required

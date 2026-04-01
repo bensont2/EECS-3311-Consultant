@@ -18,7 +18,8 @@ def consultant_required(f):
 @consultant_required
 def dashboard():
     requests = Booking.query.filter_by(consultant_id=session['user_id'], status='Requested').all()
-    return render_template('consultant/dashboard.html', requests=requests)
+    slot_count = Availability.query.filter_by(consultant_id=session['user_id'], is_booked=False).count()
+    return render_template('consultant/dashboard.html', requests=requests, slot_count=slot_count)
 
 @consultant_bp.route('/availability', methods=['GET', 'POST'])
 @consultant_required
