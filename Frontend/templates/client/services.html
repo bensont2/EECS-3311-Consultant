@@ -1,19 +1,226 @@
 {% extends 'base.html' %}
 {% block content %}
 <h2>Browse Services</h2>
-<ul>
-{% for s in services %}
-    <li><strong>{{ s.name }}</strong> (${{ s.base_price }})
-    <ul>
-    {% for a in availabilities %}
-        {% if a.consultant_id == s.consultant_id %}
-            <li>{{ a.date }} at {{ a.start_time }} 
-                <a href="/client/book/{{ a.id }}"><button>Book</button></a>
-            </li>
+<p class="page-subtitle">Find and book consulting sessions with our experts.</p>
+
+{% if services %}
+<div class="services-grid">
+    {% for s in services %}
+    <div class="service-card">
+        <div class="service-header">
+            <h3>{{ s.name }}</h3>
+            <span class="service-price">${{ s.base_price }}</span>
+        </div>
+        {% if s.description %}
+        <p class="service-desc">{{ s.description }}</p>
         {% endif %}
+        <div class="service-meta">
+            <span class="service-duration">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                {{ s.duration_minutes }} min
+            </span>
+        </div>
+        
+        <div class="availability-section">
+            <h4>Available Time Slots</h4>
+            <div class="slots-list">
+                {% set ns = namespace(found=false) %}
+                {% for a in availabilities %}
+                    {% if a.consultant_id == s.consultant_id and not a.is_booked %}
+                        {% set ns.found = true %}
+                        <div class="slot-item">
+                            <div class="slot-info">
+                                <span class="slot-date">{{ a.date }}</span>
+                                <span class="slot-time">{{ a.start_time }} - {{ a.end_time }}</span>
+                            </div>
+                            <a href="/client/book/{{ a.id }}"><button class="btn-book">Book Now</button></a>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                {% if not ns.found %}
+                <p class="no-slots">No available slots at the moment. Check back later!</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
     {% endfor %}
-    </ul>
-    </li>
-{% endfor %}
-</ul>
+</div>
+{% else %}
+<div class="empty-state">
+    <div class="empty-icon">📋</div>
+    <p>No services available at the moment.</p>
+    <p class="empty-hint">Please check back later for new consulting services.</p>
+</div>
+{% endif %}
+
+<style>
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 24px;
+    margin-top: 28px;
+}
+
+.service-card {
+    background: #0d0d0d;
+    border: 1px solid #1f1f1f;
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    border-color: rgba(52, 211, 153, 0.5);
+    box-shadow: 0 4px 24px rgba(16, 185, 129, 0.1);
+    transform: translateY(-2px);
+}
+
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 14px;
+    gap: 12px;
+}
+
+.service-header h3 {
+    color: #FFFFFF;
+    font-size: 1.25rem;
+    margin: 0;
+    flex: 1;
+}
+
+.service-price {
+    background: linear-gradient(135deg, #10B981, #059669);
+    color: #000;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.service-desc {
+    color: #9CA3AF;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+
+.service-meta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.service-duration {
+    color: #6B7280;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.service-duration svg {
+    color: #10B981;
+}
+
+.availability-section {
+    border-top: 1px solid #1f1f1f;
+    padding-top: 18px;
+    margin-top: 8px;
+}
+
+.availability-section h4 {
+    color: #10B981;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+
+.slots-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.slot-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.slot-item:hover {
+    border-color: #2a2a2a;
+    background: #0f0f0f;
+}
+
+.slot-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.slot-date {
+    color: #E5E7EB;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.slot-time {
+    color: #6B7280;
+    font-size: 0.85rem;
+}
+
+.btn-book {
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    background: #10B981;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-book:hover {
+    background: #059669;
+    transform: scale(1.02);
+}
+
+.no-slots {
+    color: #6B7280;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: 20px;
+    background: #0a0a0a;
+    border-radius: 10px;
+    border: 1px dashed #2a2a2a;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: #6B7280;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.empty-hint {
+    font-size: 0.9rem;
+    color: #4B5563;
+    margin-top: 8px;
+}
+</style>
 {% endblock %}
