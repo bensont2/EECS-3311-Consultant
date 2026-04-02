@@ -1,5 +1,5 @@
 # EECS-3311 Consultant Booking Platform
-Our Class and use case diagrams are in the pdf diagrams folder
+The pdf diagrams folder, has our class UML class diagram and class case diagram.
 
 A Flask + SQLite web app where clients book consultants, consultants manage schedules, and admins oversee the platform.
 
@@ -8,6 +8,7 @@ A Flask + SQLite web app where clients book consultants, consultants manage sche
 ---
 
 ## Architecture Overview
+
 
 The app is split into four layers:
 
