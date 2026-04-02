@@ -1,0 +1,62 @@
+version: "3.8"
+
+services:
+  # ── Database Container (PostgreSQL) ──
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: eecs3311
+      POSTGRES_PASSWORD: eecs3311pass
+      POSTGRES_DB: booking_platform
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eecs3311 -d booking_platform"]    
+      timeout: 5s
+      retries: 5
+
+  # ── Backend Container (Flask + Gunicorn) ──
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://eecs3311:eecs3311pass@db:5432/booking_platform
+      SECRET_KEY: super-secret-eecs3311-key
+      TEMPLATE_DIR: /frontend/templates
+      AI_key: ${AI_key}
+    volumes:
+      - ./Frontend/templates:/frontend/templates:ro
+    ports:
+      - "5001:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
+  # ── Frontend Container (Nginx Reverse Proxy) ──
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
