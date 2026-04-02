@@ -60,9 +60,9 @@ Visit **http://localhost:5000** — the database is created and seeded automatic
 
 > Full history: https://github.com/bensont2/EECS-3311-Consultant/commits/main
 
-| Person | Role | Files |
+| Person | Role | Contributions |
 |---|---|---|
-| **Faiyaz Saraf** | Backend Core | `models.py`, `database.py`, `config.py` |
-| **Abror Khabibov** | Routes / API | `app.py`, `routes/` |
-| **Benson Tran** | Business Logic | `services/`, `patterns/` |
-| **Misha Varankesh** | Frontend | `templates/` |
+| **Faiyaz Saraf** | Backend Core | `models.py`, `database.py`, `config.py/`, `AI/`  |
+| **Abror Khabibov** | Routes / API | `app.py`, `routes/`, `config.py/`, `FrontEnd/`  |
+| **Benson Tran** | Business Logic | `services/`, `patterns/`, `Docker Setup/` |
+| **Misha Varankesh** | Frontend | `templates/`, `Front end/` |
