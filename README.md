@@ -123,6 +123,7 @@ cp .env.example .env
 
 # Start all services
 docker-compose up
+
 ```
 
 Visit **http://localhost:5000** — the system will be fully initialized.
@@ -137,24 +138,6 @@ python Backend/app.py
 ```
 
 Visit **http://localhost:5000** — the database is created and seeded automatically.
-
----
-
-## Configuration
-
-### Environment Variables
-
-Create a `.env` file based on `.env.example`:
-
-```env
-FLASK_ENV=development
-DATABASE_URL=sqlite:///booking_platform.db
-AI_API_KEY=your_openai_or_claude_api_key
-AI_PROVIDER=openai  # or 'claude', 'gemini'
-SECRET_KEY=your_secret_key
-```
-
-See `.env.example` for all available options.
 
 ---
 
@@ -229,28 +212,6 @@ EECS-3311-Consultant/
 
 > Full commit history: https://github.com/bensont2/EECS-3311-Consultant/commits/main
 
----
-
-## Development Workflow
-
-1. **Create a feature branch:**
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-2. **Make atomic commits with descriptive messages:**
-   ```bash
-   git commit -m "Implement AI chatbot interface for client dashboard"
-   ```
-
-3. **Push to GitHub:**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-4. **Create a Pull Request** for code review before merging to `main`
-
----
 
 ## AI Assistant Documentation
 
