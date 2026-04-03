@@ -111,7 +111,7 @@ Navigate to the client dashboard and click "AI Assistant" in the sidebar. The ch
 
 ## How to Run
 
-### Option 1: Docker Deployment (Recommended)
+### Option 1: Docker Deployment 
 
 ```bash
 git clone https://github.com/bensont2/EECS-3311-Consultant.git
