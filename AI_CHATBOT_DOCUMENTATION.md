@@ -1,211 +1,101 @@
 # AI Customer Assistant Documentation
 
-## Description of Chatbot Functionality
+## 1. Description of Chatbot Functionality
 
-The AI Customer Assistant is an intelligent chatbot integrated into the client portal of the EECS-3311 Consultant Application. It serves as a virtual assistant to help clients navigate the platform, answer frequently asked questions, and provide personalized guidance for booking consultations with experts.
+The AI Customer Assistant is an intelligent chatbot integrated into the client portal. It helps clients navigate the platform, book consultations, and get answers to frequently asked questions with contextual awareness of their user profile and booking history.
 
-### Key Features:
-- **Real-time conversation support**: Clients can interact with the chatbot directly from their dashboard
-- **Contextual understanding**: The chatbot is aware of the user's booking history and preferences
-- **Multi-turn conversations**: Supports complex queries across multiple exchanges
-- **Intelligent routing**: Routes complex issues to human consultants when necessary
-- **24/7 availability**: Provides round-the-clock support without wait times
-
----
-
-## Examples of Questions the Chatbot Can Answer
-
-### Booking & Scheduling
-- *"What consultants are available next Monday?"*
-- *"How do I book a consultation with a specific expert?"*
-- *"Can I reschedule my existing appointment?"*
-- *"What is the cancellation policy?"*
-
-### Services & Pricing
-- *"What services are available and how much do they cost?"*
-- *"Do you offer package discounts?"*
-- *"Are there any ongoing promotions?"*
-
-### Payment & Billing
-- *"What payment methods do you accept?"*
-- *"How do I view my invoice history?"*
-- *"Is my payment information secure?"*
-- *"Can I get a refund?"*
-
-### Account Management
-- *"How do I update my profile information?"*
-- *"How do I change my password?"*
-- *"Can I download my consultation records?"*
-
-### Technical Support
-- *"I'm having trouble logging in. What should I do?"*
-- *"How do I reset my password?"*
-- *"What browsers are supported?"*
+**Key Features:**
+- Real-time conversation support directly from the client dashboard
+- Contextual understanding of user booking history and preferences
+- Multi-turn conversations supporting complex queries
+- Automatic escalation to human consultants when needed
+- 24/7 availability without wait times
 
 ---
 
-## System Context Provided to the AI
+## 2. Examples of Questions the Chatbot Can Answer
 
-The chatbot operates with the following contextual information to provide accurate and personalized responses:
+**Booking & Scheduling:**
+- "What consultants are available next Monday?"
+- "How do I book a consultation?" / "How do I reschedule my appointment?"
+- "What is the cancellation policy?"
 
-### User Information
-- User profile data (name, email, account type)
-- Booking history and past consultations
-- Payment history and preferred payment methods
-- User preferences and communication settings
+**Services & Pricing:**
+- "What services are available and what do they cost?"
+- "Are there package discounts or ongoing promotions?"
 
-### Platform Data
-- Available consultants and their expertise areas
-- Current availability slots and scheduling information
-- Service offerings and pricing structures
-- Organizational policies (cancellation, refund, privacy)
+**Payment & Billing:**
+- "What payment methods do you accept?"
+- "How do I view my invoice history?" / "Can I get a refund?"
+- "Is my payment information secure?"
 
-### Conversation Context
-- Current user session information
-- Recent interactions and customer inquiries
-- User's current location in the application
-- Previous chat history with the assistant
+**Account Management:**
+- "How do I update my profile?" / "How do I reset my password?"
+- "Can I download my consultation records?"
 
-### Operational Data
-- FAQ database
-- Common troubleshooting steps
-- Escalation procedures
-- Business rules and constraints
+**Technical Support:**
+- "I'm having trouble logging in. What should I do?"
+- "What browsers are supported?"
 
 ---
 
-## Privacy and Safety Measures Implemented
+## 3. System Context Provided to the AI
 
-### Data Protection
-- **Encryption in transit**: All communication between client and server uses HTTPS/TLS encryption
-- **Encryption at rest**: Sensitive data in the chatbot's memory is encrypted
-- **No sensitive data logging**: Payment information, passwords, and personal identifiers are never logged
-- **Session isolation**: Each user session is isolated and cannot access other users' data
+The chatbot uses the following contextual information to generate accurate, personalized responses:
 
-### User Safety
-- **Content filtering**: Inappropriate, offensive, or harmful content is filtered out
-- **Prompt injection prevention**: System prevents users from manipulating the chatbot's system instructions
-- **Rate limiting**: Protection against abuse by limiting message frequency per user
-- **Behavioral monitoring**: Detects and flags suspicious patterns (e.g., repeated failed login attempts)
-
-### Privacy Compliance
-- **GDPR compliant**: User data handling follows GDPR requirements
-- **Data retention policies**: Chat history is retained only for necessary periods
-- **Right to deletion**: Users can request deletion of their conversation history
-- **Transparency**: Users are informed when chatting with an AI vs. human agent
-- **Consent management**: Users can control what data the chatbot can access
-
-### Access Control
-- **Authentication required**: Only logged-in users can interact with the chatbot
-- **Role-based permissions**: Chatbot responses vary based on user role (client, consultant, admin)
-- **API authentication**: All backend API calls include proper authentication tokens
-- **Audit logging**: Non-sensitive interactions are logged for compliance and improvement purposes
+- **User Information:** Profile data, booking history, payment history, and preferences
+- **Platform Data:** Available consultants, expertise areas, availability slots, services, and organizational policies
+- **Session Context:** Current user session, recent interactions, and previous chat history
+- **Knowledge Base:** FAQ database, troubleshooting procedures, and business rules
 
 ---
 
-## API Integration Approach
+## 4. Privacy and Safety Measures Implemented
 
-### Architecture Overview
+**Data Protection:**
+- HTTPS/TLS encryption for all communication
+- Sensitive data encrypted at rest; payment info and passwords never logged
+- Session isolation ensures users cannot access others' data
+- API key and credentials stored securely in environment variables
 
-The chatbot is built using a modular architecture with clear separation between frontend UI and backend processing:
+**User Safety:**
+- Content filtering prevents inappropriate or harmful responses
+- Prompt injection prevention protects system instructions
+- Rate limiting prevents chatbot abuse
+- Behavioral monitoring detects suspicious patterns
+
+**Privacy Compliance:**
+- GDPR-compliant user data handling
+- Users can request deletion of conversation history
+- Users are informed when chatting with AI vs. human agents
+- User consent controls what data the chatbot can access
+
+**Access Control:**
+- Authentication required for all chatbot interactions
+- Role-based responses (client, consultant, admin)
+- All backend API calls include proper authentication tokens
+- Audit logging for compliance and system improvement
+
+---
+
+## 5. API Integration Approach
+
+**Architecture:**
+- **Frontend:** Interactive chat UI in `Frontend/templates/client/ai_assistant_bot.html` with real-time message handling
+- **Backend:** Flask API endpoint (e.g., `/api/chat`) processes messages, injects user context, and calls external AI service
+- **External AI Service:** OpenAI API (or compatible) generates responses based on system prompts and context
+- **Database:** Retrieves user profile, booking history, FAQ data, and stores conversation records
+
+
 
 ```
-Frontend (ai_assistant_bot.html)
-        ↓
-  Chat Interface
-        ↓
-Backend Routes (Flask)
-        ↓
-  ChatBot Service
-        ↓
-  [Database] [External AI API] [Business Logic]
-```
 
-### Frontend Integration
-- **UI Layer**: Interactive chat interface in `Frontend/templates/client/ai_assistant_bot.html`
-- **Message handling**: Real-time message updates using JavaScript
-- **Display formatting**: Markdown rendering for rich text responses
-- **Error handling**: User-friendly error messages and retry mechanisms
+**Security & Optimization:**
+- API keys stored in environment variables
+- All inputs validated before external API calls
+- Response sanitization prevents injection attacks
+- Cost monitoring tracks API usage
+- Pre-defined fallback responses if AI service is unavailable
 
-### Backend Integration
-- **API Endpoint**: RESTful endpoint for chat requests (typically `/api/chat` or `/chatbot`)
-- **Message processing**: Flask route handler processes incoming messages
-- **Context injection**: System automatically injects user context from the database
-- **Response generation**: Calls external AI API (e.g., OpenAI GPT, similar service)
 
-### External AI Service Integration
-- **API Selection**: Uses OpenAI API or compatible AI service
-- **Request formatting**: Messages formatted according to API specifications
-- **System prompts**: Pre-configured prompts define chatbot personality and constraints
-- **Error handling**: Graceful fallback if AI service is unavailable
-- **Rate limiting**: Manages API quota and cost optimization
 
-### Database Integration
-- **User context retrieval**: Loads user profile, booking history, and preferences
-- **Knowledge base**: Queries FAQ and help documentation
-- **Conversation history**: Stores chat interactions for context and compliance
-- **Analytics**: Tracks common questions and user satisfaction metrics
-
-### Request/Response Flow
-
-**Outgoing Request:**
-```json
-{
-  "user_id": "user_123",
-  "message": "What consultants are available?",
-  "session_id": "session_abc",
-  "context": {
-    "user_profile": {...},
-    "recent_bookings": [...],
-    "preferences": {...}
-  }
-}
-```
-
-**Incoming Response:**
-```json
-{
-  "response": "Based on your preferences, here are the available consultants...",
-  "confidence": 0.95,
-  "requires_human_review": false,
-  "related_actions": ["view_consultants", "book_consultation"],
-  "metadata": {
-    "response_time_ms": 245,
-    "model_used": "gpt-4"
-  }
-}
-```
-
-### Security Considerations for API Integration
-- **API key management**: Keys stored securely in environment variables
-- **Request validation**: All inputs validated before sending to external API
-- **Response sanitization**: AI responses sanitized to prevent injection attacks
-- **Cost monitoring**: API usage tracked to prevent unexpected charges
-- **Fallback responses**: Pre-defined responses when API is unavailable
-
----
-
-## Configuration & Monitoring
-
-### Environment Variables
-- `AI_API_KEY`: Authentication key for the AI service
-- `AI_API_ENDPOINT`: Base URL for the AI service
-- `CHATBOT_ENABLED`: Feature flag to enable/disable chatbot
-- `CHATBOT_MAX_TOKENS`: Maximum token response limit
-
-### Monitoring
-- **Response time tracking**: Monitors latency of chat responses
-- **Error rates**: Tracks API failures and error types
-- **User satisfaction**: Collects feedback on chatbot responses
-- **Conversation analytics**: Identifies trending questions and gaps in knowledge base
-
----
-
-## Future Enhancements
-
-- Multi-language support
-- Voice input/output capabilities
-- Integration with CRM for better personalization
-- Machine learning model fine-tuning on domain-specific data
-- Sentiment analysis for escalation triggers
-- Proactive suggestions based on user behavior
