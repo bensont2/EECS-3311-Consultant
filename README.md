@@ -224,23 +224,6 @@ The AI Customer Assistant is fully documented in `AI_CHATBOT_DOCUMENTATION.md`, 
 
 ---
 
-## Troubleshooting
-
-**Docker containers not starting?**
-- Ensure Docker and Docker Compose are installed
-- Check that ports 5000 (backend), 3000 (frontend), and 5432 (database) are available
-- Review logs: `docker-compose logs -f`
-
-**AI Assistant not responding?**
-- Verify API key is correctly set in `.env`
-- Check AI service logs: `docker-compose logs ai_service`
-- Ensure internet connectivity for LLM API calls
-
-**Database not persisting?**
-- Verify volumes are mounted in docker-compose.yml
-- Check directory permissions for data persistence
-
----
 
 ## Resources
 
