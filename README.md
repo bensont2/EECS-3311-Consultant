@@ -126,7 +126,7 @@ docker-compose up
 
 ```
 
-Visit **http://localhost:5000** — the system will be fully initialized.
+Visit **http://localhost:80** — the system will be fully initialized.
 
 ### Option 2: Local Development
 
